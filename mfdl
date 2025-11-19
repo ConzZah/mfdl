@@ -5,12 +5,18 @@
 # Author : ConzZah
 ######################
 
+dl=""; [ "$1" = "dl" ] && dl='1' && shift
+
 [ -z "$1" ] && { echo; echo '--> ENTER MEDIAFIRE URL'; echo; read -r mfurl ;}
 
 [ -n "$1" ] && mfurl="$1"
 
 curl -sLo  '.mfhtml' "$mfurl"
 
-grep -o 'https://download.*.mediafire.*' < .mfhtml| cut -d '"' -f 1| curl -# @-
+grep -o 'https://download.*.mediafire.*' < .mfhtml| cut -d '"' -f 1 > .mfdlurl
 
-rm -f .mfhtml; exit
+echo; cat .mfdlurl
+
+[ -n "$dl" ] && curl -#L @- < .mfdlurl
+
+rm -f .mfhtml .mfdlurl; exit
