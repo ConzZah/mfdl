@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+######################
+# Project: mfdl
+# Author : ConzZah
+######################
+
+[ -z "$1" ] && { echo; echo '--> ENTER MEDIAFIRE URL'; echo; read -r mfurl ;}
+
+[ -n "$1" ] && mfurl="$1"
+
+curl -sLo  '.mfhtml' "$mfurl"
+
+mfdlurl="$(grep -o 'https://download.*.mediafire.*' < .mfhtml| cut -d '"' -f 1)"
+
+echo; echo "$mfdlurl"; rm -f .mfhtml; exit
