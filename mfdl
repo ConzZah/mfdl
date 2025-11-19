@@ -11,6 +11,6 @@
 
 curl -sLo  '.mfhtml' "$mfurl"
 
-mfdlurl="$(grep -o 'https://download.*.mediafire.*' < .mfhtml| cut -d '"' -f 1)"
+grep -o 'https://download.*.mediafire.*' < .mfhtml| cut -d '"' -f 1| curl -# @-
 
-echo; echo "$mfdlurl"; rm -f .mfhtml; exit
+rm -f .mfhtml; exit
